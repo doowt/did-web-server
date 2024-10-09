@@ -14,7 +14,7 @@ Run the `create-did.sh` script for each user who needs one, e.g.
 where the first argument is a user identifier (e.g. their docker container's name)
 and the second is the service endpoint that implements the DIDComm API.
 
-This creates `did:web:didwebserver:dids:alice` and displays to `stout` the
+This creates `did:web:didwebserver:dids:alice` and displays to `stdout` the
 corresponding private key.  The displayed private key is not permanently stored
 on disk, so it must be copied from the terminal output.
 
@@ -46,11 +46,12 @@ docker network (but it can be useful for debugging to check that the DIDs are
 being served correctly from the host).
 
 ### Run nginx
-Run `docker compose up -d` from the repository root to run web server to serve
-the DID(s).  Each time the container starts, it runs the script in
-`./ssl/create-certificate.sh`, which generates:
-- A self-signed Certificate Authority (CA) certificate
-- A certificate issued by this CA to the nginx webserver called `didwebserver`
+Run `docker compose up -d` from the repository root to run the web server to
+serve the DID(s).  Each time the container starts, it runs the script in
+`./ssl/didwebserver/create-certificate.sh`, which generates:
+- A self-signed Certificate Authority (CA) certificate `./ssl/didwebserver/ta.crt`
+- A certificate issued by this CA to the nginx webserver called `didwebserver`,
+  `./ssl/didwebserver/didwebserver.crt`
 
 Note that this means that if you restart the nginx container, you need to
 restart any container that depends on the CA certificate since it will change.
