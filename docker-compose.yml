@@ -1,0 +1,17 @@
+services:
+  nginx:
+    image: nginx
+    container_name: didwebserver
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./html:/usr/share/nginx/html:ro
+      - ./ssl/didwebserver:/etc/ssl/didwebserver
+    ports:
+      - 443:443
+    command: bash -c "pushd /etc/ssl/didwebserver && ./create-certificate.sh && popd && nginx-debug -g 'daemon off;'"
+    networks: 
+      - default
+
+networks:
+  default:
+    external: false

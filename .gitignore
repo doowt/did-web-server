@@ -1,0 +1,3 @@
+ssl/didwebserver/*
+!ssl/didwebserver/create-certificate.sh
+html/dids/*
